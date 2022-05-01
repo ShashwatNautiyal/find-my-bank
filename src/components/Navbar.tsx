@@ -195,19 +195,18 @@ const Navbar = () => {
 					<Disclosure.Panel className="md:hidden">
 						<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 							{navigation.map((item) => (
-								<Disclosure.Button
-									key={item.name}
-									as="a"
-									href={item.href}
-									className={classNames(
-										item.href === resolved.pathname
-											? "bg-gray-900 text-white"
-											: "text-gray-300 hover:bg-gray-700 hover:text-white",
-										"block px-3 py-2 rounded-md text-base font-medium"
-									)}
-								>
-									{item.name}
-								</Disclosure.Button>
+								<Link key={item.href} to={item.href}>
+									<Disclosure.Button
+										className={classNames(
+											item.href === resolved.pathname
+												? "bg-gray-900 text-white"
+												: "text-gray-300 hover:bg-gray-700 hover:text-white",
+											"block w-full text-left px-3 py-2 rounded-md text-base font-medium"
+										)}
+									>
+										{item.name}
+									</Disclosure.Button>
+								</Link>
 							))}
 						</div>
 					</Disclosure.Panel>
