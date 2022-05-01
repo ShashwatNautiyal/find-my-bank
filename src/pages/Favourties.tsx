@@ -4,11 +4,16 @@ import { BanksTable } from "../components/BanksTable";
 import { Pagination } from "../components/Pagination";
 import { bankAtom } from "./Home";
 
+/**
+ *
+ * It displays the favourites banks marked by the user. The list is stored in user localStorage.
+ */
 const Favourties = () => {
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(10);
 	const [{ favourites }] = useRecoilState(bankAtom);
 
+	// Slices the favourites list on page change.
 	const filteredFavourites = useMemo(() => {
 		if (!favourites) return;
 		const firstPageIndex = (page - 1) * pageSize;

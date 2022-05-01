@@ -5,6 +5,10 @@ import Bank from "../types/Bank";
 import { classNames } from "../utils";
 import { bankAtom } from "./Home";
 
+/**
+ *
+ * It displays the details of the bank whenever user clicks on any bank row in the table.
+ */
 const BankDetail = () => {
 	const { ifsc } = useParams();
 
@@ -12,6 +16,7 @@ const BankDetail = () => {
 
 	const [{ banks, isLoading }] = useRecoilState(bankAtom);
 
+	// Find the specific bank according to ifsc from the bank list.
 	useEffect(() => {
 		if (banks) {
 			setBank(banks.find((bank) => bank.ifsc === ifsc));

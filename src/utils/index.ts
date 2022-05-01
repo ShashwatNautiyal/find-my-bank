@@ -1,20 +1,39 @@
 import { useMemo } from "react";
 
+/**
+ *
+ * @param classes Array of string
+ * @returns Single string of all strings passed in the array
+ */
 export function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(" ");
 }
 
-export function debounce(func: (...params: any[]) => any, timeout: number) {
+/**
+ *
+ * @param func Function that runs after the timer is off in debounce function.
+ * @param timeout Time in miliseconds to clearTimeout.
+ * @returns void
+ */
+export function debounce(
+	func: (...params: any[]) => any,
+	timeout: number
+): (this: any, ...args: any[]) => void {
 	let timer: ReturnType<typeof setTimeout>;
-	return (...args: any[]) => {
+	return function (this: any, ...args: any[]) {
 		clearTimeout(timer);
 		timer = setTimeout(() => {
-			// @ts-ignore
 			func.apply(this, args);
 		}, timeout);
 	};
 }
 
+/**
+ *
+ * @param start First number of the array
+ * @param end Last number of the array
+ * @returns Array of the numbers from start to end
+ */
 const makeArray = (start: number, end: number) => {
 	let length = end - start + 1;
 	return Array.from({ length }, (_, idx) => idx + start);

@@ -5,6 +5,10 @@ import { bankAtom } from "../pages/Home";
 import Bank from "../types/Bank";
 import { classNames } from "../utils";
 
+/**
+ * It displays the table of the banks passed in the props.
+ */
+
 export const BanksTable = ({
 	title,
 	subtitle,
@@ -84,6 +88,7 @@ const LoadingTable = ({ banks, pageSize }: { banks?: Bank[]; pageSize: number })
 
 	const [{ isLoading, favourites, error }, setBankState] = useRecoilState(bankAtom);
 
+	// If error occured error message is shown in the table.
 	if (error) {
 		return (
 			<tr>
@@ -94,6 +99,7 @@ const LoadingTable = ({ banks, pageSize }: { banks?: Bank[]; pageSize: number })
 		);
 	}
 
+	// Handle the mark and un-mark for the favourites list.
 	const handleFavourites = (bank: Bank) => {
 		let _favourites = favourites ? [...favourites] : [];
 		const fav = _favourites.find((item) => item.ifsc === bank.ifsc);
@@ -115,6 +121,7 @@ const LoadingTable = ({ banks, pageSize }: { banks?: Bank[]; pageSize: number })
 		}
 	};
 
+	// Skeletol loading
 	if (isLoading) {
 		return (
 			<>
@@ -138,6 +145,7 @@ const LoadingTable = ({ banks, pageSize }: { banks?: Bank[]; pageSize: number })
 		);
 	}
 
+	// Displays not found if banks list is empty
 	if (!banks || banks.length === 0) {
 		return (
 			<tr>

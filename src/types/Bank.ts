@@ -1,3 +1,6 @@
+/**
+ * Bank schema fetched from the API.
+ */
 export default interface Bank {
 	address: string;
 	bank_id: number;

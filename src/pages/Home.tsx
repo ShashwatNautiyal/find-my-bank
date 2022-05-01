@@ -6,18 +6,23 @@ import { useEffect, useMemo, useState } from "react";
 import { AxiosError } from "axios";
 import { useSearchParams } from "react-router-dom";
 
+/**
+ *
+ * Home page is the default page. It renders the all banks table
+ */
 const Home = () => {
 	const [page, setPage] = useState(1);
 	const [{ banks }] = useRecoilState(bankAtom);
 	const [pageSize, setPageSize] = useState(10);
 	let [searchParams, setSearchParams] = useSearchParams();
 
+	// Fetches the current page from the URL and paginate to that page.
 	let paramValue = searchParams.get("page");
-
 	useEffect(() => {
 		setPage(parseInt(paramValue ?? "1"));
 	}, [paramValue]);
 
+	// Slice the bank list on page change.
 	const filteredBanks = useMemo(() => {
 		if (!banks) return;
 		const firstPageIndex = (page - 1) * pageSize;
@@ -52,6 +57,9 @@ const Home = () => {
 	);
 };
 
+/**
+ * Global state of the Banks, loading, error and favourites.
+ */
 export const bankAtom = atom({
 	key: "bankAtom",
 	default: {

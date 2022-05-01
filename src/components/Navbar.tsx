@@ -14,6 +14,10 @@ const navigation = [
 	{ name: "Favorites", href: "/favourites" },
 ];
 
+/**
+ * Navbar takes displays the navlinks, dropdowns and search bar. Searchbar and dropdowns are only visible in all-banks route
+ */
+
 const Navbar = () => {
 	const [selectedState, setSelectedState] = useState(stateOptions[0]);
 	const [selectedSearch, setSelectedSearch] = useState(searchOptions[0]);
@@ -23,10 +27,12 @@ const Navbar = () => {
 
 	const [_, setBankState] = useRecoilState(bankAtom);
 
+	// Route object with pathname and etc.
 	const resolved = useResolvedPath(window.location);
 	const isHome = resolved.pathname === "/all-banks";
 
 	useEffect(() => {
+		// If network failed error is set to Axios Error and loading is set to false.
 		if (error) {
 			setBankState((prev) => ({
 				...prev,
@@ -36,6 +42,7 @@ const Navbar = () => {
 				favourites: undefined,
 			}));
 		}
+
 		if (data) {
 			setBankState((prev) => {
 				if (localStorage.getItem("favourites")) {
@@ -60,6 +67,7 @@ const Navbar = () => {
 		}
 	}, [data, isLoading]);
 
+	// Search function to filter the bank list according to the search input and option.
 	const handleSearch = useCallback(
 		debounce((search) => {
 			if (search === "") {

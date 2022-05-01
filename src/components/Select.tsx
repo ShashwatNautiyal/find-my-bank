@@ -15,6 +15,9 @@ type Option = {
 	value: string;
 };
 
+/**
+ * It shows the dropdown with the option passed in props.
+ */
 const Select = (props: SelectProps) => {
 	const { options, selected, setSelected, position } = props;
 

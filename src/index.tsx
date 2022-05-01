@@ -6,6 +6,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import "./index.css";
 import { RecoilRoot } from "recoil";
 
+/**
+ * Important defaults of the react-query to stop the un-necessary re-fetching of the APIS.
+ */
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {

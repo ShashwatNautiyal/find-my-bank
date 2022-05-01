@@ -5,6 +5,10 @@ import { bankAtom } from "../pages/Home";
 import Bank from "../types/Bank";
 import { classNames, debounce, usePagination } from "../utils";
 
+/**
+ *
+ * It displays the no of banks with pagination and option to change items/page.
+ */
 export const Pagination = ({
 	page,
 	totalCount,
@@ -35,6 +39,7 @@ export const Pagination = ({
 	const [pageSizeInput, setPageSizeInput] = useState(pageSize);
 	const [{ isLoading }] = useRecoilState(bankAtom);
 
+	// Handle the items per row input by the delay of 300ms and callback function returns the memoized value of debounce function.
 	const handlePageSize = useCallback(
 		debounce((e: React.ChangeEvent<HTMLInputElement>) => {
 			if (e.target.value === "") {
@@ -46,6 +51,7 @@ export const Pagination = ({
 		[]
 	);
 
+	// No need to display pagination if there is banks and length of banks length is 0.
 	if (banks && banks.length === 0) {
 		return <></>;
 	}
@@ -103,7 +109,7 @@ export const Pagination = ({
 										<li
 											aria-current="page"
 											className={classNames(
-												"relative  bg-gray-300 border-gray-300 animate-pulse text-gray-500 cursor-pointer inline-flex items-center min-h-full md:px-4 px-2 md:py-2 py-1.5 border text-sm font-medium"
+												"relative  bg-gray-300 border-gray-300 animate-pulse text-gray-500 cursor-pointer inline-flex items-center min-h-full w-10 border text-sm font-medium"
 											)}
 										></li>
 									))
