@@ -29,10 +29,12 @@ const Home = () => {
 		<>
 			<BanksTable
 				banks={filteredBanks}
+				pageSize={pageSize}
 				title="Find Your Bank"
 				subtitle="A list of all the banks in your city including their name, ID, IFSC, branch and address."
 			/>
 			<Pagination
+				banks={filteredBanks}
 				pageSize={pageSize}
 				marginPages={1}
 				setPageSize={(size) => setPageSize(size)}

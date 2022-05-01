@@ -9,10 +9,12 @@ export const BanksTable = ({
 	title,
 	subtitle,
 	banks,
+	pageSize,
 }: {
 	title: string;
 	subtitle: string;
 	banks?: Bank[];
+	pageSize: number;
 }) => {
 	return (
 		<div className="px-4 sm:px-6 lg:px-8 mt-7">
@@ -66,7 +68,7 @@ export const BanksTable = ({
 									</tr>
 								</thead>
 								<tbody className="bg-white">
-									<LoadingTable banks={banks} />
+									<LoadingTable banks={banks} pageSize={pageSize} />
 								</tbody>
 							</table>
 						</div>
@@ -77,7 +79,7 @@ export const BanksTable = ({
 	);
 };
 
-const LoadingTable = ({ banks }: { banks?: Bank[] }) => {
+const LoadingTable = ({ banks, pageSize }: { banks?: Bank[]; pageSize: number }) => {
 	const navigate = useNavigate();
 
 	const [{ isLoading, favourites, error }, setBankState] = useRecoilState(bankAtom);
@@ -116,7 +118,7 @@ const LoadingTable = ({ banks }: { banks?: Bank[] }) => {
 	if (isLoading) {
 		return (
 			<>
-				{new Array(10).fill(0).map((_, index) => (
+				{new Array(pageSize).fill(0).map((_, index) => (
 					<tr
 						key={index}
 						className={classNames(
@@ -136,7 +138,7 @@ const LoadingTable = ({ banks }: { banks?: Bank[] }) => {
 		);
 	}
 
-	if (banks && banks.length === 0) {
+	if (!banks || banks.length === 0) {
 		return (
 			<tr>
 				<td className="whitespace-nowrap h-12 text-sm font-medium text-gray-900 sm:pl-6 pl-4">

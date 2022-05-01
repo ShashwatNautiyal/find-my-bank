@@ -1,5 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import { useCallback, useState } from "react";
+import { useRecoilState } from "recoil";
+import { bankAtom } from "../pages/Home";
+import Bank from "../types/Bank";
 import { classNames, debounce, usePagination } from "../utils";
 
 export const Pagination = ({
@@ -10,6 +13,7 @@ export const Pagination = ({
 	setPage,
 	setPageSize,
 	marginPages,
+	banks,
 }: {
 	page: number;
 	totalCount: number;
@@ -18,6 +22,7 @@ export const Pagination = ({
 	setPageSize: (size: number) => void;
 	setPage: (page: number) => void;
 	marginPages: number;
+	banks?: Bank[];
 }) => {
 	const paginationMap = usePagination({
 		page,
@@ -28,6 +33,7 @@ export const Pagination = ({
 	});
 
 	const [pageSizeInput, setPageSizeInput] = useState(pageSize);
+	const [{ isLoading }] = useRecoilState(bankAtom);
 
 	const handlePageSize = useCallback(
 		debounce((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,15 +46,21 @@ export const Pagination = ({
 		[]
 	);
 
+	if (banks && banks.length === 0) {
+		return <></>;
+	}
+
 	return (
 		<div className="flex my-4 md:flex-row flex-col items-center gap-4 justify-between px-0 sm:px-6 lg:px-8">
-			<div>
+			{isLoading ? (
+				<p className="bg-gray-300 h-5 animate-pulse w-48"></p>
+			) : (
 				<p className="text-sm text-gray-700">
 					Showing <span className="font-medium">{(page - 1) * pageSize + 1}</span> to{" "}
 					<span className="font-medium">{page * pageSize}</span> of{" "}
 					<span className="font-medium">{totalCount}</span> results
 				</p>
-			</div>
+			)}
 			<div className="flex md:flex-row flex-col items-center gap-4 justify-center">
 				<div className="relative border border-gray-300 rounded-md px-3 py-2 shadow focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
 					<label
@@ -84,32 +96,43 @@ export const Pagination = ({
 							<ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
 						</li>
 
-						{paginationMap?.map((item, index) => (
-							<li
-								onClick={() => {
-									if (typeof item === "number") setPage(item);
-									else if (
-										typeof item === "string" &&
-										index < paginationMap.length / 2
-									)
-										setPage(page - siblingCount * 2);
-									else if (
-										typeof item === "string" &&
-										index > paginationMap.length / 2
-									)
-										setPage(page + siblingCount * 2);
-								}}
-								aria-current="page"
-								className={classNames(
-									item === page
-										? "z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
-										: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50",
-									" relative cursor-pointer inline-flex items-center md:px-4 px-2 md:py-2 py-1.5 border text-sm font-medium"
-								)}
-							>
-								{item}
-							</li>
-						))}
+						{isLoading
+							? Array((marginPages + siblingCount) * 3)
+									.fill(0)
+									.map((_, index) => (
+										<li
+											aria-current="page"
+											className={classNames(
+												"relative  bg-gray-300 border-gray-300 animate-pulse text-gray-500 cursor-pointer inline-flex items-center min-h-full md:px-4 px-2 md:py-2 py-1.5 border text-sm font-medium"
+											)}
+										></li>
+									))
+							: paginationMap?.map((item, index) => (
+									<li
+										onClick={() => {
+											if (typeof item === "number") setPage(item);
+											else if (
+												typeof item === "string" &&
+												index < paginationMap.length / 2
+											)
+												setPage(page - siblingCount * 2);
+											else if (
+												typeof item === "string" &&
+												index > paginationMap.length / 2
+											)
+												setPage(page + siblingCount * 2);
+										}}
+										aria-current="page"
+										className={classNames(
+											item === page
+												? "z-10 bg-indigo-50 border-indigo-500 text-indigo-600"
+												: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50",
+											" relative cursor-pointer inline-flex items-center md:px-4 px-2 md:py-2 py-1.5 border text-sm font-medium"
+										)}
+									>
+										{item}
+									</li>
+							  ))}
 
 						<li
 							onClick={() => setPage(page + 1)}

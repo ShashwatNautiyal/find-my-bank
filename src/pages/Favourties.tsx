@@ -19,11 +19,13 @@ const Favourties = () => {
 	return (
 		<>
 			<BanksTable
+				pageSize={pageSize}
 				banks={filteredFavourites}
 				title="Favourites"
 				subtitle="A list of your favourite banks in your city including their name, ID, IFSC, branch and address."
 			/>
 			<Pagination
+				banks={filteredFavourites}
 				setPageSize={(size) => setPageSize(size)}
 				pageSize={pageSize}
 				siblingCount={1}
