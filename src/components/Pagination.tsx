@@ -1,8 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import { useCallback, useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { useRecoilState } from "recoil";
-import { bankAtom } from "../pages/Home";
+import { useCallback, useState } from "react";
 import { classNames, debounce, usePagination } from "../utils";
 
 export const Pagination = ({
