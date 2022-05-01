@@ -63,8 +63,10 @@ export const Pagination = ({
 			) : (
 				<p className="text-sm text-gray-700">
 					Showing <span className="font-medium">{(page - 1) * pageSize + 1}</span> to{" "}
-					<span className="font-medium">{page * pageSize}</span> of{" "}
-					<span className="font-medium">{totalCount}</span> results
+					<span className="font-medium">
+						{page * pageSize > totalCount ? totalCount : page * pageSize}
+					</span>{" "}
+					of <span className="font-medium">{totalCount}</span> results
 				</p>
 			)}
 			<div className="flex md:flex-row flex-col items-center gap-4 justify-center">
