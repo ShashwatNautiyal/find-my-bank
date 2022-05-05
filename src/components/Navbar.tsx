@@ -85,7 +85,6 @@ const Navbar = () => {
 					return value.toLowerCase().includes(search.toLowerCase());
 				}
 			});
-
 			setBankState((prev) => ({
 				...prev,
 				banks: _banks,
@@ -94,7 +93,7 @@ const Navbar = () => {
 			newSearchParams.set("page", "1");
 			setSearchParams(newSearchParams);
 		}, 300),
-		[]
+		[data]
 	);
 
 	return (
