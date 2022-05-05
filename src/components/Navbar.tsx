@@ -94,7 +94,7 @@ const Navbar = () => {
 			newSearchParams.set("page", "1");
 			setSearchParams(newSearchParams);
 		}, 300),
-		[searchInput]
+		[]
 	);
 
 	return (

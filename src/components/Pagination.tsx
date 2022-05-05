@@ -109,6 +109,7 @@ export const Pagination = ({
 									.fill(0)
 									.map((_, index) => (
 										<li
+											key={index}
 											aria-current="page"
 											className={classNames(
 												"relative  bg-gray-300 border-gray-300 animate-pulse text-gray-500 cursor-pointer inline-flex items-center min-h-full w-10 border text-sm font-medium"
@@ -117,6 +118,7 @@ export const Pagination = ({
 									))
 							: paginationMap?.map((item, index) => (
 									<li
+										key={index}
 										onClick={() => {
 											if (typeof item === "number") setPage(item);
 											else if (
